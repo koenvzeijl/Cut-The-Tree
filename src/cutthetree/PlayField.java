@@ -23,6 +23,7 @@ public class PlayField extends JComponent {
     private long start = System.currentTimeMillis();
 
     private boolean finished = false;
+    private int arrowCounter = 1;
 
     private Player player;
     private LevelType level;
@@ -182,11 +183,21 @@ public class PlayField extends JComponent {
             if(player.xPos == 1 && player.yPos == 2 && !player.isMoving()){
                 player.say("I need to get to my house!");
                 long diff = System.currentTimeMillis()-start;
+                int offset = 0;
+                if(diff>150){
+                    start=System.currentTimeMillis();
 
+                    arrowCounter = (arrowCounter + 1) % 4;
+                }
 
-                    if(diff>150){
-                        start=System.currentTimeMillis();
-                    }
+                offset = arrowCounter * 75;
+
+                g.drawImage(
+                        imageArrow, // Source image
+                        750 , 680, 825 , 755, // Destination position
+                        offset, 0, offset + 75, 75, // Source position
+                        null
+                );
                     //g.drawImage(imageArrow,10,9,i*75,0,null);
 
 
