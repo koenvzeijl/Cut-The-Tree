@@ -10,7 +10,7 @@ public class LevelSelectMenu extends StartMenu {
     private int currentChoice = 0;
 
     public LevelSelectMenu(Game game) {
-        super(game, "Tutorial", "Easy", "Medium", "Hard", "Back");
+        super(game, "Tutorial", "Easy", "Medium", "Hard", "Bonus", "Back");
     }
 
     @Override

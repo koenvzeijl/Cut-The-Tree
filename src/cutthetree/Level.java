@@ -28,7 +28,7 @@ public class Level {
         URL resource;
 
         int number = levelNumber > 0 ? levelNumber : random.nextInt(NUM_LEVELS) + 1;
-        if (type != LevelType.TUTORIAL) {
+        if (type != LevelType.TUTORIAL && type != LevelType.BONUS) {
             Game.setCurrentLevel(number);
             resource = Level.class.getResource("/level/" + type.toString().toLowerCase().substring(0, 1) + number + ".txt");
         } else {

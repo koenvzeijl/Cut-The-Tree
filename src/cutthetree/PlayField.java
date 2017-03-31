@@ -3,6 +3,7 @@ package cutthetree;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -17,17 +18,20 @@ import java.util.ArrayList;
 public class PlayField extends JComponent {
     private static Image imageAxe;
     private static Image imageBackpack;
+    private static Font font;
 
     private boolean finished = false;
 
     private Player player;
 
+    private LevelType levelType;
     private Direction walking = null;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
+    private long time = System.currentTimeMillis() + 61000;
 
     public PlayField(LevelType type, int levelNumber) {
         fields = Level.generateLevel(type, levelNumber);
-
+        levelType = type;
         player = new Player(1, 1);
         fields.get(1).set(1, player);
 
@@ -62,6 +66,7 @@ public class PlayField extends JComponent {
         });
 
         if (imageBackpack == null || imageAxe == null) loadImages();
+        if (font == null) loadFont();
     }
 
     /**
@@ -72,6 +77,14 @@ public class PlayField extends JComponent {
             imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
             imageAxe = ImageIO.read(PlayField.class.getResource("/img/axes.png"));
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadFont() {
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, Menu.class.getResourceAsStream("/font/pokemon.ttf")).deriveFont(32f);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -121,6 +134,9 @@ public class PlayField extends JComponent {
         if (fields.get(x + dx).get(y + dy) instanceof Finish) {
             Game.loadSound("winning.wav");
             Game.changeState(GameState.FINISHED);
+            if(levelType == LevelType.BONUS){
+                Game.changeState(GameState.BONUS);
+            }
             finished = true;
             fields.get(x).set(y, new Field(x, y));
 
@@ -145,8 +161,10 @@ public class PlayField extends JComponent {
         }
 
         paintBackpack(g);
+        if (levelType == LevelType.BONUS) painCounter(g);
         if (!finished) player.paint(g);
     }
+
 
     /**
      * Paint the player's backpack in the upper right corner.
@@ -167,5 +185,15 @@ public class PlayField extends JComponent {
                     null
             );
         }
+    }
+
+    private void painCounter(Graphics g) {
+        int x = 10;
+        int y = 50;
+
+        g.setFont(font);
+        g.setColor(Color.white);
+        int timeLeft = (int) ((time - System.currentTimeMillis())/1000);
+        g.drawString(String.valueOf(timeLeft), x, y);
     }
 }

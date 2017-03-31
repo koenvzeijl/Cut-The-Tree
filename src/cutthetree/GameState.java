@@ -11,4 +11,5 @@ public enum GameState {
     PLAYING,
     PAUSED,
     FINISHED,
+    BONUS,
 }
