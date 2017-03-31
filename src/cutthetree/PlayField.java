@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static cutthetree.LevelType.TUTORIAL;
+
 /**
  * The PlayField class is responsible for the game itself.
  * <p>
@@ -17,10 +19,13 @@ import java.util.ArrayList;
 public class PlayField extends JComponent {
     private static Image imageAxe;
     private static Image imageBackpack;
+    private static Image imageArrow;
+    private long start = System.currentTimeMillis();
 
     private boolean finished = false;
 
     private Player player;
+    private LevelType level;
 
     private Direction walking = null;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
@@ -30,6 +35,7 @@ public class PlayField extends JComponent {
 
         player = new Player(1, 1);
         fields.get(1).set(1, player);
+        level = type;
 
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
@@ -71,6 +77,7 @@ public class PlayField extends JComponent {
         try {
             imageBackpack = ImageIO.read(PlayField.class.getResource("/img/backpack-icon.png"));
             imageAxe = ImageIO.read(PlayField.class.getResource("/img/axes.png"));
+            imageArrow = ImageIO.read(PlayField.class.getResource("/img/arrow.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,6 +152,7 @@ public class PlayField extends JComponent {
         }
 
         paintBackpack(g);
+        explanation(g);
         if (!finished) player.paint(g);
     }
 
@@ -167,5 +175,26 @@ public class PlayField extends JComponent {
                     null
             );
         }
+    }
+
+    private void explanation(Graphics g){
+        if(level==TUTORIAL){
+            if(player.xPos == 1 && player.yPos == 2 ){
+                player.say("I need to get to my house!");
+                long diff = System.currentTimeMillis()-start;
+
+
+                    if(diff>150){
+                        start=System.currentTimeMillis();
+                    }
+                    g.drawImage(imageArrow,10,9,i*75,0,null);
+
+
+
+
+            }
+        }
+
+
     }
 }
