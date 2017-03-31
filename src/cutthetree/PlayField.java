@@ -179,7 +179,7 @@ public class PlayField extends JComponent {
 
     private void explanation(Graphics g){
         if(level==TUTORIAL){
-            if(player.xPos == 1 && player.yPos == 2 ){
+            if(player.xPos == 1 && player.yPos == 2 && !player.isMoving()){
                 player.say("I need to get to my house!");
                 long diff = System.currentTimeMillis()-start;
 
@@ -187,7 +187,7 @@ public class PlayField extends JComponent {
                     if(diff>150){
                         start=System.currentTimeMillis();
                     }
-                    g.drawImage(imageArrow,10,9,i*75,0,null);
+                    //g.drawImage(imageArrow,10,9,i*75,0,null);
 
 
 
