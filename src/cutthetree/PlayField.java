@@ -22,10 +22,7 @@ public class PlayField extends JComponent {
 
     private Player player;
 
-    /**
-     * If the player is currently walking or not
-     */
-    private boolean walking = false;
+    private Direction walking = null;
     private ArrayList<ArrayList<Field>> fields = new ArrayList<>();
 
     public PlayField(LevelType type, int levelNumber) {
@@ -38,7 +35,9 @@ public class PlayField extends JComponent {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                walking = false;
+                if (walking == Direction.fromKeyCode(e.getKeyCode())) {
+                    walking = null;
+                }
             }
 
             @Override
@@ -50,20 +49,10 @@ public class PlayField extends JComponent {
                         Game.changeState(GameState.PAUSED);
                         break;
                     case KeyEvent.VK_UP:
-                        player.changeDirection(Direction.UP);
-                        walking = true;
-                        break;
                     case KeyEvent.VK_DOWN:
-                        player.changeDirection(Direction.DOWN);
-                        walking = true;
-                        break;
                     case KeyEvent.VK_LEFT:
-                        player.changeDirection(Direction.LEFT);
-                        walking = true;
-                        break;
                     case KeyEvent.VK_RIGHT:
-                        player.changeDirection(Direction.RIGHT);
-                        walking = true;
+                        walking = Direction.fromKeyCode(e.getKeyCode());
                         break;
                     case KeyEvent.VK_SPACE:
                         cut();
@@ -110,6 +99,8 @@ public class PlayField extends JComponent {
      * Let the player walk in the given direction.
      */
     private void walk(Direction direction) {
+        if (player.isMoving()) return;
+
         player.changeDirection(direction);
 
         int x = player.xPos;
@@ -142,7 +133,7 @@ public class PlayField extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (walking) walk(player.getDirection());
+        if (walking != null) walk(walking);
 
         for (ArrayList<Field> row : fields) {
             for (Field field : row) {

@@ -1,5 +1,7 @@
 package cutthetree;
 
+import java.awt.event.KeyEvent;
+
 /**
  * This represents the current direction of a {@link Player}
  */
@@ -23,5 +25,16 @@ public enum Direction {
 
     public int getDy() {
         return dy;
+    }
+
+    public static Direction fromKeyCode(int code) {
+        switch (code) {
+            case KeyEvent.VK_DOWN: return Direction.DOWN;
+            case KeyEvent.VK_UP: return Direction.UP;
+            case KeyEvent.VK_LEFT: return Direction.LEFT;
+            case KeyEvent.VK_RIGHT: return Direction.RIGHT;
+        }
+
+        return null;
     }
 }

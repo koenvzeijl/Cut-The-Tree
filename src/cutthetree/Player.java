@@ -49,9 +49,13 @@ public class Player extends Field {
         }
     }
 
+    public boolean isMoving() {
+        return animX + animY != 0;
+    }
+
     public boolean move(int dx, int dy) {
         // Disallow move while animating
-        if (animX + animY != 0) return false;
+        if (isMoving()) return false;
 
         animX = dx;
         animY = dy;
