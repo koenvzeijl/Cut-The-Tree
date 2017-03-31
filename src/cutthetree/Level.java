@@ -55,6 +55,8 @@ public class Level {
         // F: Finish
         // 1-6: Different colored Lumberaxe
         // a-f: Different colored Tree
+        // A: player 1
+        // B: player 2
         // Anything else as Field
 
         ArrayList<ArrayList<Field>> fields = new ArrayList<>();
