@@ -44,6 +44,10 @@ public class Field {
         return isSolid;
     }
 
+    public void setSolid(){
+        isSolid = true;
+    }
+
     /**
      * Paint a representation of this field on screen
      */

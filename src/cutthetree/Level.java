@@ -79,7 +79,7 @@ public class Level {
                         fields.get(x).add(new Lumberaxe(x, y, Color.values()[chr - '1']));
                     } else if (chr >= 'a' && chr <= 'f') {
                         fields.get(x).add(new Tree(x, y, Color.values()[chr - 'a']));
-                    } else {
+                    } else{
                         fields.get(x).add(new Field(x, y));
                     }
                 }
