@@ -12,6 +12,7 @@ public class Field {
     public static final int SIZE = 75;
 
     protected static Image grass;
+    private boolean coin = false;
 
     /**
      * The current position on the play field
@@ -43,6 +44,14 @@ public class Field {
     public boolean isSolid() {
         return isSolid;
     }
+
+    /**
+     * Whether the field contains a coin
+     */
+    public boolean hasCoin(){return coin;}
+
+
+    public void setCoin(boolean coin){this.coin = coin;}
 
     /**
      * Paint a representation of this field on screen

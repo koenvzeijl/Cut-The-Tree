@@ -52,13 +52,13 @@ public class Game extends JComponent {
             @Override
             public void keyReleased(KeyEvent e) {
                 // Delegate key released to the play field while playing
-                if (state == GameState.PLAYING) playField.dispatchEvent(e);
+                if (state == GameState.PLAYING || state == GameState.BONUS) playField.dispatchEvent(e);
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
                 // Delegate key press to the appropriate object for the current state
-                if (state == GameState.PLAYING) {
+                if (state == GameState.PLAYING || state == GameState.BONUS) {
                     playField.dispatchEvent(e);
                 } else {
                     menus.get(state).dispatchEvent(e);
@@ -208,4 +208,6 @@ public class Game extends JComponent {
             menus.get(state).paintComponent(g);
         }
     }
+
+    protected static GameState getState(){return state;}
 }

@@ -35,6 +35,7 @@ public class PauseMenu extends Menu {
     protected void onKeyPress(KeyEvent e) {
         // Restore playing state on ESC, else delegate to parent.
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (Game.)
             Game.changeState(GameState.PLAYING);
             selected = 0;
         } else {

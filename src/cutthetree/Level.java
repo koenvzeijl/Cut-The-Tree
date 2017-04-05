@@ -32,7 +32,11 @@ public class Level {
             Game.setCurrentLevel(number);
             resource = Level.class.getResource("/level/" + type.toString().toLowerCase().substring(0, 1) + number + ".txt");
         } else {
-            resource = Level.class.getResource("/level/" + type.toString().toLowerCase() + ".txt");
+            if(Game.getState() == GameState.BONUS){
+                resource = Level.class.getResource("/level/" + "b1" + ".txt");
+            }else{
+                resource = Level.class.getResource("/level/" + type.toString().toLowerCase() + ".txt");
+            }
         }
 
         if (resource != null) {
